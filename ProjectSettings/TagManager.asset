@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - BlockBarrier
+  - isItem
+  - MAST_Holder
   layers:
   - Default
   - TransparentFX

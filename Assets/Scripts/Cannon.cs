@@ -7,30 +7,52 @@ using System;
 
 public class Cannon : MonoBehaviour
 {
-	public Transform shootBallPoint;
+
+
+
+    public Transform shootBallPoint;
 	public GameObject bulletPrefab;
+	public GameObject ball;
+	GameObject player;
+	public Transform camera1;
 
 	//Mira
 	public bool showAim;
 
 	public Transform aim;
-
+	
     private void Start()
     {
 		aim = GetComponentInChildren<Canvas>().transform;
 		//aim.gameObject.SetActive(false);
+		player = GameObject.FindGameObjectWithTag("Player");
+		camera1 = Camera.main.transform;
 	}
-    
-    
 
 
-    public void Shoot() {
+	private void Update()
+	{
 		
-		GameObject clone = Instantiate (bulletPrefab,shootBallPoint.position,shootBallPoint.rotation);
-		
-		clone.GetComponent<Bala>().Shoot();
+
+
+		DrawAim(camera1.transform);
+
+	}
 	
+
+	public void Shoot() {
+
+		/*GameObject clone = Instantiate (bulletPrefab,shootBallPoint.position,shootBallPoint.rotation);
+		
+		clone.GetComponent<Bala>().Shoot();*/
+
+	
+		//FindObjectOfType<CharacterController>().GetComponent<CharacterController>().items[0].GetComponent<Bala>().Shoot();
+
+
+
 	}
+
 
 	public void ShowAim() {
 
@@ -53,12 +75,17 @@ public class Cannon : MonoBehaviour
 
 	   else
         {
-			Vector3 nuevoVector = camera.forward * 20f;
-			Vector3 end = camera.position + nuevoVector;
-			shootBallPoint.LookAt(end);
-			Debug.DrawRay(camera.position, end, Color.blue);
+			Vector3 nuevoVector = camera.forward * 10000f;
+			
+			shootBallPoint.LookAt(nuevoVector);
+		
 
         }
 
-    }
+		Vector3 nuevoVectr = camera.forward * 20f;
+		Vector3 end1 = camera.position + nuevoVectr;
+		Debug.DrawRay(camera.position, nuevoVectr, Color.blue);
+		if (FindObjectOfType<CharacterController>().items.Count > 0) { FindObjectOfType<CharacterController>().itemHolder.GetComponentInChildren<Bala>().transform.LookAt(nuevoVectr); }
+	
+	}
 }
